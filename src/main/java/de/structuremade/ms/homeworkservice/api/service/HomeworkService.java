@@ -43,7 +43,8 @@ public class HomeworkService {
         Lessons lesson;
         try {
             lesson = lessonsRepo.getOne(ch.getLesson());
-            if (lessonsRepo.existsByTeacherAndId((user = userRepo.getOne(jwtUtil.extractIdOrEmail(jwt))), ch.getLesson()) || lessonSubstitutesRepo.existsBySubstituteTeacherAndLesson(user,lesson)) {
+            if (lessonsRepo.existsByTeacherAndId((user = userRepo.getOne(jwtUtil.extractIdOrEmail(jwt))), ch.getLesson()) || lessonSubstitutesRepo.existsBySubstituteTeacherAndLesson(user,lesson) &&
+                    lesson.getSchool().getId().equals(jwtUtil.extractSpecialClaim(jwt, "schoolid"))) {
                 homework.setLesson(lesson.getLessonRoles());
             }else{
                 return 2;
