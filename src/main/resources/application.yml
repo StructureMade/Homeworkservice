@@ -18,3 +18,5 @@ eureka:
     register-with-eureka: false
     service-url:
       defaultZone: https://eureka.structuremade.de/eureka/
+server:
+  port: 80

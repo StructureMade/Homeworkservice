@@ -24,7 +24,6 @@ public class User {
     @Column(updatable = false, nullable = false)
     private String id;
 
-    @Column(nullable = false)
     private String email;
 
     @Column(nullable = false)
@@ -35,6 +34,9 @@ public class User {
 
     @Column
     private String password;
+
+    @Column
+    private String abbreviation;
 
     @Column(nullable = false)
     private Date creationDate;
@@ -48,23 +50,27 @@ public class User {
     @Column
     private String lastSchool;
 
-    @ManyToMany(targetEntity = School.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = School.class)
     @JoinTable(name = "userschools", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid")))
+            , inverseJoinColumns = @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_school")))
     private List<School> schools = new ArrayList<>();
 
-    @ManyToMany(targetEntity = Role.class, fetch = FetchType.LAZY)
-    @JoinTable(name = "userroles", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "role", foreignKey = @ForeignKey(name = "fk_roleid")))
-    private List<Role> roles = new ArrayList<>();
-
     @ManyToMany(targetEntity = LessonRoles.class)
-    @JoinTable(name = "userlessons", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
-            , inverseJoinColumns = @JoinColumn(name = "lesson", foreignKey = @ForeignKey(name = "fk_lessonid")))
-    private List<LessonRoles> lessonRoles = new ArrayList<>();
+    @JoinTable(name = "userlessonroles", schema = "services", joinColumns = @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
+            , inverseJoinColumns = @JoinColumn(name = "lessonrole", foreignKey = @ForeignKey(name = "fk_lessonrole")))
+    private List<LessonRoles> lessonRoles;
 
-    @OneToMany(targetEntity = Lessons.class)
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "userparents", schema = "services", joinColumns = @JoinColumn(name = "parent", foreignKey = @ForeignKey(name = "fk_parent"))
+            , inverseJoinColumns = @JoinColumn(name = "student", foreignKey = @ForeignKey(name = "fk_student")))
+    private List<User> parents;
+
+    @ManyToMany(targetEntity = User.class)
+    @JoinTable(name = "userparents", schema = "services", joinColumns = @JoinColumn(name = "parent", foreignKey = @ForeignKey(name = "fk_parent"))
+            , inverseJoinColumns = @JoinColumn(name = "student", foreignKey = @ForeignKey(name = "fk_student")))
+    private List<User> childrens;
+
+    @OneToMany(targetEntity = LessonRoles.class)
     @JoinColumn(name = "teacher")
-    private List<Lessons> lessons;
-
-    }
+    private List<LessonRoles> lessons;
+}

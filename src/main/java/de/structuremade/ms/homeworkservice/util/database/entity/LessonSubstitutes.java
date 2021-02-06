@@ -29,19 +29,15 @@ public class LessonSubstitutes {
     @Column(name = "dateofsubstitute")
     private Date DateOfSubstitute;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "substituteTeacherId", foreignKey = @ForeignKey(name = "fk_substituteTeacherid"))
+    @ManyToOne(targetEntity =User.class)
+    @JoinColumn(name = "substituteTeacher", foreignKey = @ForeignKey(name = "fk_substituteTeacher"))
     private User substituteTeacher;
 
     @ManyToOne(targetEntity = Lessons.class)
-    @JoinColumn(name = "lessonid")
+    @JoinColumn(name = "lesson")
     private Lessons lesson;
 
     @ManyToOne
-    @JoinColumn(name = "editor", foreignKey = @ForeignKey(name = "fk_userid"))
+    @JoinColumn(name = "editor", foreignKey = @ForeignKey(name = "fk_user"))
     private User user;
-
-    @ManyToOne(targetEntity = School.class)
-    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
-    private School school;
 }

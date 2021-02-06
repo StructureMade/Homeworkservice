@@ -28,19 +28,25 @@ public class Lessons {
     @Column
     private int state;
 
-    @ManyToOne(targetEntity = User.class)
-    @JoinColumn(name = "teacherId", foreignKey = @ForeignKey(name = "fk_teacherid"))
-    private User teacher;
-
-    @ManyToOne(targetEntity = School.class)
-    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    @ManyToOne
+    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_school"))
     private School school;
 
-    @ManyToOne(targetEntity = LessonRoles.class)
-    @JoinColumn(name = "lessonroleid", foreignKey = @ForeignKey(name = "fk_lessonroleid"))
-    private LessonRoles lessonRoles;
+    @ManyToOne
+    @JoinColumn(name = "lessonrole", foreignKey = @ForeignKey(name = "fk_lessonrole"))
+    private LessonRoles lessonRole;
 
     @OneToMany(targetEntity = LessonSubstitutes.class)
-    @JoinColumn(name = "lessonid")
+    @JoinColumn(name = "lesson")
+    private List<LessonSubstitutes> lesson;
+
+    @OneToMany(targetEntity = Homework.class)
+    @JoinColumn(name = "lesson", foreignKey = @ForeignKey(name = "fk_lessonrole"))
+    private List<Homework> homework;
+
+    @OneToMany(targetEntity = LessonSubstitutes.class)
+    @JoinColumn(name = "lesson")
     private List<LessonSubstitutes> substitutes;
+
+
 }

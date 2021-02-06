@@ -16,28 +16,7 @@ import java.util.function.Function;
 public class JWTUtil {
 
     private static final String SECRET = "8NYjXn89%q4fbF5yTAEa4r_A^WeXq*gCtDe4!4mV-59SrJN%d!$4Qz*+";
-    Key signingKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(""), SignatureAlgorithm.HS512.getJcaName());
-
-/*    private final List<String> blacklistMap = new ArrayList<>();
-
-    @Bean
-    private void blacklistedTokenSort() {
-        if (!blacklistMap.isEmpty()) {
-            for (int i = 0; i <= blacklistMap.size(); i++) {
-                if (extractExpiration(blacklistMap.get(i)).before(new Date())) {
-                    blacklistMap.remove(i);
-                }
-            }
-        }
-    }
-
-    public boolean isTokenInBlacklist(String token) {
-        return blacklistMap.contains(token);
-    }
-
-    public void addBlacklistedToken(String token) {
-        blacklistMap.add(token);
-    }*/
+    Key signingKey = new SecretKeySpec(DatatypeConverter.parseBase64Binary(SECRET), SignatureAlgorithm.HS512.getJcaName());
 
     public String extractIdOrEmail(String token) {
         return extractClaim(token, Claims::getSubject);

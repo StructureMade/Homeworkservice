@@ -27,6 +27,9 @@ public class Homework {
     @Column
     private Date validTill;
 
+    @Column
+    private String data;
+
     @ManyToOne(targetEntity = LessonRoles.class)
     @JoinColumn(name = "lesson", foreignKey = @ForeignKey(name = "fk_lesson"))
     private LessonRoles lesson;

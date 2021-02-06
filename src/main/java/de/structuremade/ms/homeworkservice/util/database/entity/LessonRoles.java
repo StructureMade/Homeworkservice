@@ -7,7 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.util.List;
 
-
 @Entity
 @Table(name = "lessonroles")
 @Getter
@@ -22,13 +21,13 @@ public class LessonRoles {
     @Column
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "schoolid", foreignKey = @ForeignKey(name = "fk_schoolid"))
-    private School school;
+    @ManyToOne(targetEntity = User.class)
+    @JoinColumn(name = "teacher", foreignKey = @ForeignKey(name = "fk_teacherid"))
+    private User teacher;
 
-    @OneToMany(targetEntity = Lessons.class)
-    @JoinColumn(name = "lessonroleid")
-    private List<Lessons> lessons;
+    @ManyToOne
+    @JoinColumn(name = "school", foreignKey = @ForeignKey(name = "fk_schoolid"))
+    private School school;
 
     @OneToMany(targetEntity = Homework.class)
     @JoinColumn(name = "lesson", foreignKey = @ForeignKey(name = "fk_lessonrole"))

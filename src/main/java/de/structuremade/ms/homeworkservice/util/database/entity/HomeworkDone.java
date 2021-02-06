@@ -18,10 +18,13 @@ public class HomeworkDone {
     private String id;
 
     @ManyToOne(targetEntity = Homework.class)
-    @JoinColumn(name = "homeworkid", foreignKey = @ForeignKey(name = "fk_homeworkid"))
+    @JoinColumn(name = "homework", foreignKey = @ForeignKey(name = "fk_homework"))
     private Homework homework;
 
     @ManyToOne(targetEntity = User.class)
     @JoinColumn(name = "userid", foreignKey = @ForeignKey(name = "fk_userid"))
     private User user;
+
+    @Column
+    private String data;
 }

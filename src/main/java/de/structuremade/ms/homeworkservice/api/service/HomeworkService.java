@@ -43,9 +43,9 @@ public class HomeworkService {
         Lessons lesson;
         try {
             lesson = lessonsRepo.getOne(ch.getLesson());
-            if (lessonsRepo.existsByTeacherAndId((user = userRepo.getOne(jwtUtil.extractIdOrEmail(jwt))), ch.getLesson()) || lessonSubstitutesRepo.existsBySubstituteTeacherAndLesson(user,lesson) &&
+            if (lessonrolesRepo.existsByTeacherAndId((user = userRepo.getOne(jwtUtil.extractIdOrEmail(jwt))),  lesson.getLessonRole().getId()) || lessonSubstitutesRepo.existsBySubstituteTeacherAndLesson(user,lesson) &&
                     lesson.getSchool().getId().equals(jwtUtil.extractSpecialClaim(jwt, "schoolid"))) {
-                homework.setLesson(lesson.getLessonRoles());
+                homework.setLesson(lesson.getLessonRole());
             }else{
                 return 2;
             }
@@ -83,7 +83,7 @@ public class HomeworkService {
 
     public int delete(String homework, String jwt) {
         try {
-            if (!homeworkRepo.existsByCreatorAndId(userRepo.getOne(jwtUtil.extractIdOrEmail(jwt)), homework)){
+            if (homeworkRepo.existsByCreatorAndId(userRepo.getOne(jwtUtil.extractIdOrEmail(jwt)), homework)){
                 return 2;
             }
             LOGGER.info("Delete the homework");
@@ -99,7 +99,7 @@ public class HomeworkService {
         Homework homeworkEdit;
         try {
             LOGGER.info("Try to get the Homework");
-            if (!homeworkRepo.existsByCreatorAndId(userRepo.getOne(jwtUtil.extractIdOrEmail(jwt)), homework)){
+            if (homeworkRepo.existsByCreatorAndId(userRepo.getOne(jwtUtil.extractIdOrEmail(jwt)), homework)){
                 return 2;
             }
             homeworkEdit = homeworkRepo.getOne(homework);
